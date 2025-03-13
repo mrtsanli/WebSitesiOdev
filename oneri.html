@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öneriler | Canlılar Dünyası</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        
+        nav {
+            background-color: #34495e;
+            padding: 1rem 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #3498db;
+        }
+        
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .section-header {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .intro-text {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: #444;
+            text-align: center;
+        }
+        
+        .suggestion-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .voted-suggestions {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .suggestion-card {
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .suggestion-card:last-child {
+            border-bottom: none;
+        }
+        
+        .vote-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #3498db;
+            width: 50px;
+            text-align: center;
+        }
+        
+        .suggestion-content {
+            flex: 1;
+            padding: 0 1rem;
+        }
+        
+        .suggestion-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+        
+        .suggestion-author {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .vote-button {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .vote-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Canlılar Dünyası</h1>
+        <p>Hayvanlar Alemine Hoş Geldiniz</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="kesfet.html">Keşfet</a></li>
+            <li><a href="hakkinda.html">Hakkında</a></li>
+            <li><a href="oneri.html">Öneriler</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <h2 class="section-header">Önerileriniz</h2>
+        <p class="intro-text">
+            Sitemize hangi hayvanların eklenmesini istersiniz? Gördüğünüz hatalar veya geliştirmek istediğiniz özellikler hakkında önerilerinizi bizimle paylaşın.
+        </p>
+        
+        <div class="suggestion-form">
+            <h3>Yeni Öneri Ekle</h3>
+            <form id="oneriForm">
+                <div class="form-group">
+                    <label for="oneriBaslik">Öneri Başlığı</label>
+                    <input type="text" id="oneriBaslik" name="oneriBaslik" required placeholder="Örn: Yeni hayvan türü ekleyin">
+                </div>
+                
+                <div class="form-group">
+                    <label for="oneriTuru">Öneri Türü</label>
+                    <select id="oneriTuru" name="oneriTuru" required>
+                        <option value="">Seçiniz</option>
+                        <option value="yeniHayvan">Yeni Hayvan Ekleme</option>
+                        <option value="yeniOzellik">Yeni Özellik</option>
+                        <option value="hataRaporu">Hata Raporu</option>
+                        <option value="icerikDuzeltme">İçerik Düzeltme</option>
+                        <option value="diger">Diğer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="oneriDetay">Öneri Detayı</label>
+                    <textarea id="oneriDetay" name="oneriDetay" required placeholder="Lütfen önerinizi detaylı bir şekilde anlatın..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="oneriIsim">İsminiz</label>
+                    <input type="text" id="oneriIsim" name="oneriIsim" placeholder="İsteğe bağlı">
+                </div>
+                
+                <div class="form-group">
+                    <label for="oneriEmail">E-posta Adresiniz</label>
+                    <input type="email" id="oneriEmail" name="oneriEmail" placeholder="İsteğe bağlı, cevap almak isterseniz">
+                </div>
+                
+                <button type="submit" class="btn">Öneri Gönder</button>
+            </form>
+        </div>
+        
+        <div class="voted-suggestions">
+            <h3>En Çok Oy Alan Öneriler</h3>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">42</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Deniz canlıları bölümü eklensin</div>
+                    <div class="suggestion-author">Ömer Y. tarafından</div>
+                </div>
+                <button class="vote-button">Oy Ver</button>
+            </div>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">38</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Vahşi kediler kategorisi açılsın</div>
+                    <div class="suggestion-author">Ayşe K. tarafından</div>
+                </div>
+                <button class="vote-button">Oy Ver</button>
+            </div>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">27</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Hayvan sesleri eklensin</div>
+                    <div class="suggestion-author">Mehmet A. tarafından</div>
+                </div>
+                <button class="vote-button">Oy Ver</button>
+            </div>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">19</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Nesli tükenen türler için özel bölüm</div>
+                    <div class="suggestion-author">Zeynep Ş. tarafından</div>
+                </div>
+                <button class="vote-button">Oy Ver</button>
+            </div>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">14</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Daha fazla hayvan fotoğrafı</div>
+                    <div class="suggestion-author">Ali R. tarafından</div>
+                </div>
+                <button class="vote-button">Oy Ver</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Canlılar Dünyası. Tüm hakları saklıdır.</p>
+    </footer>
+    
+    <script>
+        // Form submit olayını dinle
+        document.getElementById('oneriForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form verilerini al
+            const baslik = document.getElementById('oneriBaslik').value;
+            const detay = document.getElementById('oneriDetay').value;
+            
+            // Gerçek uygulamada bu veriler sunucuya gönderilecektir
+            alert(`Öneriniz için teşekkürler!\n\nBaşlık: ${baslik}\nDetay: ${detay}\n\nÖneriniz değerlendirilmek üzere kaydedildi.`);
+            
+            // Formu temizle
+            document.getElementById('oneriForm').reset();
+        });
+        
+        // Oy butonlarına tıklanma olayını dinle
+        const oyButonlari = document.querySelectorAll('.vote-button');
+        oyButonlari.forEach(buton => {
+            buton.addEventListener('click', function() {
+                const oyKutusu = this.parentElement.querySelector('.vote-count');
+                let oyAdedi = parseInt(oyKutusu.textContent);
+                oyAdedi++;
+                oyKutusu.textContent = oyAdedi;
+                
+                // Butonu devre dışı bırak (gerçek uygulamada)
+                this.disabled = true;
+                this.textContent = "Oylandı";
+                this.style.backgroundColor = "#d5d5d5";
+            });
+        });
+    </script>
+</body>
+</html>
