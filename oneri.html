@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öneriler | Canlılar Dünyası</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #05704a; /* Daha koyu yeşil */
+            --primary-dark: #044d31;
+            --secondary-color: #a855f7;  /* Mor */
+            --text-color: #1e293b;  /* Koyu gri */
+            --text-secondary: #4b5563;
+            --bg-color: #f3f4f6;  /* Açık gri */
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(to right, #05704a, #a855f7); /* Yeşil-Mor gradient */
+            --nav-bg: #ffffff; /* Beyaz */
+            --footer-bg: #05704a;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+            --rounded-md: 0.5rem; /* 8px */
+            --rounded-lg: 0.75rem; /* 12px */
+            --rounded-xl: 1rem;    /* 16px */
+            --rounded-full: 9999px; /* Tam yuvarlak */
+        }
+        
+        [data-theme="dark"] {
+            --primary-color: #10b981;
+            --primary-dark: #059669;
+            --secondary-color: #c084fc;
+            --text-color: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --bg-color: #1e293b;
+            --card-bg: #334155;
+            --header-bg: linear-gradient(to right, #134e5e, #71b280);
+            --nav-bg: #0f172a;
+            --footer-bg: #134e5e;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+    
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+            border-bottom-left-radius: var(--rounded-xl);
+            border-bottom-right-radius: var(--rounded-xl);
+        }
+        
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+        
+        header p {
+            font-size: 1.25rem;
+            opacity: 0.8;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        
+        .theme-toggle {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: var(--transition);
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        nav {
+            background-color: var(--nav-bg);
+            padding: 1.25rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0 -1rem;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        
+        nav ul li a i {
+            margin-right: 0.5rem;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--primary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section-header {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 2.25rem;
+            font-weight: 700;
+        }
+        
+        .intro-text {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+        }
+        
+        .suggestion-form {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--rounded-lg);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .suggestion-form h3 {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: var(--rounded-md);
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(5, 112, 74, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--rounded-md);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .voted-suggestions {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--rounded-lg);
+            box-shadow: var(--shadow);
+        }
+        
+        .voted-suggestions h3 {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .suggestion-card {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.25rem 0;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .suggestion-card:last-child {
+            border-bottom: none;
+        }
+        
+        .suggestion-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .vote-count {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(5, 112, 74, 0.1);
+            border-radius: var(--rounded-full);
+        }
+        
+        .suggestion-content {
+            flex: 1;
+            padding: 0 1.5rem;
+        }
+        
+        .suggestion-title {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .suggestion-author {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .suggestion-author i {
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .vote-button {
+            background-color: var(--bg-color);
+            border: none;
+            border-radius: var(--rounded-md);
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .vote-button i {
+            margin-right: 0.5rem;
+        }
+        
+        .vote-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .vote-button.voted {
+            background-color: #d1d5db;
+            color: var(--text-secondary);
+            cursor: default;
+        }
+        
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+            padding-right: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links li a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            text-align: center;
+            width: 100%;
+        }
+        
+        #user-info {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .profile-icon {
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: #e5e7eb;
+            border-radius: 50%;
+            margin-right: 0.75rem;
+        }
+        
+        #logout {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-left: 0.75rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        #logout:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .user-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        #login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        #login-link a i {
+            margin-right: 0.5rem;
+        }
+        
+        #login-link a:hover {
+            color: var(--primary-dark);
+        }
+        
+        /* Responsive tasarım */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.25rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                margin-bottom: 1rem;
+            }
+            
+            .suggestion-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .vote-count {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .suggestion-content {
+                padding: 0;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Öneriler</h1>
+        <p>Fikirleriniz ve önerilerinizle sitemizi geliştirelim</p>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Ana Sayfa</a></li>
+                <li><a href="kesfet.html"><i class="fas fa-compass"></i> Keşfet</a></li>
+                <li><a href="hakkinda.html"><i class="fas fa-info-circle"></i> Hakkında</a></li>
+                <li><a href="oneri.html" class="active"><i class="fas fa-lightbulb"></i> Öneriler</a></li>
+                <li><a href="iletisim.html"><i class="fas fa-envelope"></i> İletişim</a></li>
+            </ul>
+            
+            <div class="user-container">
+                <div id="user-info" style="display: none;">
+                    <span class="profile-icon"></span>
+                    <span id="username"></span> | <a href="#" id="logout">Çıkış Yap</a>
+                </div>
+                <div id="login-link">
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h2 class="section-header">Önerileriniz</h2>
+        <p class="intro-text">
+            Sitemize hangi hayvanların eklenmesini istersiniz? Gördüğünüz hatalar veya geliştirmek istediğiniz özellikler hakkında önerilerinizi bizimle paylaşın.
+        </p>
+        
+        <div class="suggestion-form">
+            <h3>Yeni Öneri Ekle</h3>
+            <form id="oneriForm">
+                <div class="form-group">
+                    <label for="oneriBaslik">Öneri Başlığı</label>
+                    <input type="text" id="oneriBaslik" name="oneriBaslik" required placeholder="Örn: Yeni hayvan türü ekleyin">
+                </div>
+                
+                <div class="form-group">
+                    <label for="oneriTuru">Öneri Türü</label>
+                    <select id="oneriTuru" name="oneriTuru" required>
+                        <option value="">Seçiniz</option>
+                        <option value="yeniHayvan">Yeni Hayvan Ekleme</option>
+                        <option value="yeniOzellik">Yeni Özellik</option>
+                        <option value="hataRaporu">Hata Raporu</option>
+                        <option value="icerikDuzeltme">İçerik Düzeltme</option>
+                        <option value="diger">Diğer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="oneriDetay">Öneri Detayı</label>
+                    <textarea id="oneriDetay" name="oneriDetay" required placeholder="Lütfen önerinizi detaylı bir şekilde anlatın..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="oneriIsim">İsminiz</label>
+                    <input type="text" id="oneriIsim" name="oneriIsim" placeholder="İsteğe bağlı">
+                </div>
+                
+                <div class="form-group">
+                    <label for="oneriEmail">E-posta Adresiniz</label>
+                    <input type="email" id="oneriEmail" name="oneriEmail" placeholder="İsteğe bağlı, cevap almak isterseniz">
+                </div>
+                
+                <button type="submit" class="btn">Öneri Gönder</button>
+            </form>
+        </div>
+        
+        <div class="voted-suggestions">
+            <h3>En Çok Oy Alan Öneriler</h3>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">42</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Deniz canlıları bölümü eklensin</div>
+                    <div class="suggestion-author"><i class="fas fa-user"></i> Ömer Y. tarafından</div>
+                </div>
+                <button class="vote-button"><i class="fas fa-thumbs-up"></i> Oy Ver</button>
+            </div>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">38</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Vahşi kediler kategorisi açılsın</div>
+                    <div class="suggestion-author"><i class="fas fa-user"></i> Ayşe K. tarafından</div>
+                </div>
+                <button class="vote-button"><i class="fas fa-thumbs-up"></i> Oy Ver</button>
+            </div>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">27</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Hayvan sesleri eklensin</div>
+                    <div class="suggestion-author"><i class="fas fa-user"></i> Mehmet A. tarafından</div>
+                </div>
+                <button class="vote-button"><i class="fas fa-thumbs-up"></i> Oy Ver</button>
+            </div>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">19</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Nesli tükenen türler için özel bölüm</div>
+                    <div class="suggestion-author"><i class="fas fa-user"></i> Zeynep Ş. tarafından</div>
+                </div>
+                <button class="vote-button"><i class="fas fa-thumbs-up"></i> Oy Ver</button>
+            </div>
+            
+            <div class="suggestion-card">
+                <div class="vote-count">14</div>
+                <div class="suggestion-content">
+                    <div class="suggestion-title">Daha fazla hayvan fotoğrafı</div>
+                    <div class="suggestion-author"><i class="fas fa-user"></i> Ali R. tarafından</div>
+                </div>
+                <button class="vote-button"><i class="fas fa-thumbs-up"></i> Oy Ver</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Canlılar Dünyası</h3>
+                <p>Hayvanlar alemi hakkında bilgi edinebileceğiniz, keşfedebileceğiniz ve öğrenebileceğiniz kapsamlı bir platform.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Hızlı Bağlantılar</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="kesfet.html">Keşfet</a></li>
+                    <li><a href="hakkinda.html">Hakkında</a></li>
+                    <li><a href="oneri.html">Öneriler</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>İletişim</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> info@canlilardunyasi.com</li>
+                    <li><i class="fas fa-phone"></i> +90 212 123 45 67</li>
+                    <li><i class="fas fa-map-marker-alt"></i> İstanbul, Türkiye</li>
+                </ul>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Canlılar Dünyası. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme işlevi
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        
+        // Sayfa yüklendiğinde tema kontrolü ve kullanıcı giriş kontrolü
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+            
+            // Kullanıcı giriş kontrolü
+            checkUserLogin();
+        });
+        
+        // Tema değiştirme butonu
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+        
+        // Form submit olayını dinle
+        document.getElementById('oneriForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form verilerini al
+            const baslik = document.getElementById('oneriBaslik').value;
+            const detay = document.getElementById('oneriDetay').value;
+            
+            // Gerçek uygulamada bu veriler sunucuya gönderilecektir
+            alert(`Öneriniz için teşekkürler!\n\nBaşlık: ${baslik}\nDetay: ${detay}\n\nÖneriniz değerlendirilmek üzere kaydedildi.`);
+            
+            // Formu temizle
+            document.getElementById('oneriForm').reset();
+        });
+        
+        // Oy butonlarına tıklanma olayını dinle
+        const oyButonlari = document.querySelectorAll('.vote-button');
+        oyButonlari.forEach(buton => {
+            buton.addEventListener('click', function() {
+                if (!this.classList.contains('voted')) {
+                    const oyKutusu = this.parentElement.querySelector('.vote-count');
+                    let oyAdedi = parseInt(oyKutusu.textContent);
+                    oyAdedi++;
+                    oyKutusu.textContent = oyAdedi;
+                    
+                    // Butonu devre dışı bırak
+                    this.classList.add('voted');
+                    this.innerHTML = '<i class="fas fa-check"></i> Oylandı';
+                }
+            });
+        });
+        
+        // Kullanıcı giriş kontrolü
+        function checkUserLogin() {
+            // localStorage'dan kullanıcı bilgisini kontrol et
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            if (user && user.username) {
+                // Kullanıcı giriş yapmışsa
+                document.getElementById('username').textContent = user.username;
+                
+                // Profil resmi varsa göster
+                const profileIcon = document.querySelector('.profile-icon');
+                if (profileIcon && user.profileImage) {
+                    // Profil ikonunu kullanıcı adının ilk harfi ile güncelle
+                    profileIcon.textContent = user.profileImage;
+                    profileIcon.style.display = 'flex';
+                    profileIcon.style.justifyContent = 'center';
+                    profileIcon.style.alignItems = 'center';
+                    profileIcon.style.backgroundColor = 'var(--primary-color)';
+                    profileIcon.style.color = 'white';
+                    profileIcon.style.fontWeight = 'bold';
+                }
+                
+                document.getElementById('user-info').style.display = 'flex';
+                document.getElementById('login-link').style.display = 'none';
+            } else {
+                // Kullanıcı giriş yapmamışsa
+                document.getElementById('user-info').style.display = 'none';
+                document.getElementById('login-link').style.display = 'block';
+            }
+        }
+        
+        // Çıkış yapma işlevi
+        document.getElementById('logout').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('user');
+            checkUserLogin();
+        });
+    </script>
+</body>
+</html>
