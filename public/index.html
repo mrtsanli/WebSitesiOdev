@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canlılar Dünyası</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --primary-dark: #2980b9;
+            --secondary-color: #16a085;
+            --text-color: #333;
+            --text-secondary: #666;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --header-bg: #16a085;
+            --nav-bg: #1abc9c;
+            --footer-bg: #16a085;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] {
+            --primary-color: #2ecc71;
+            --primary-dark: #27ae60;
+            --secondary-color: #1abc9c;
+            --text-color: #f0f0f0;
+            --text-secondary: #ccc;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --header-bg: #0f3443;
+            --nav-bg: #0a2836;
+            --footer-bg: #0f3443;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: var(--transition);
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+    
+        header {
+            background: linear-gradient(135deg, var(--header-bg), var(--secondary-color));
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        nav {
+            background-color: var(--nav-bg);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin: 0 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            padding: 0.3rem 0;
+        }
+        
+        nav ul li a i {
+            margin-right: 0.5rem;
+        }
+        
+        nav ul li a:hover {
+            color: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        .search-container {
+            display: flex;
+            margin-left: auto;
+            margin-right: 1rem;
+        }
+        
+        .search-container input {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px 0 0 20px;
+            outline: none;
+        }
+        
+        .search-container button {
+            background-color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            color: var(--nav-bg);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .section-header {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-header p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .hayvanlar-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .hayvan-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .hayvan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .hayvan-card .img-container {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .hayvan-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .hayvan-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .hayvan-card .content {
+            padding: 1.8rem;
+        }
+        
+        .hayvan-card h3 {
+            color: var(--text-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        
+        .hayvan-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        
+        .hayvan-card .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            margin-top: 1.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .hayvan-card .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hayvan-card .category {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid #ddd;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .no-results {
+            text-align: center;
+            margin: 2rem 0;
+            color: var(--text-secondary);
+        }
+        
+        .share-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .share-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .share-container textarea {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 100px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .share-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .share-actions .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .share-actions .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .upload-btn {
+            background-color: var(--card-bg);
+            border: 1px dashed #ddd;
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .recent-shares {
+            margin-top: 2rem;
+        }
+        
+        .share-item {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .share-user {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .share-user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .share-user .user-info {
+            flex: 1;
+        }
+        
+        .share-user .user-name {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .share-user .time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .share-content {
+            color: var(--text-color);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        
+        .share-media {
+            max-width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .share-media img {
+            width: 100%;
+            height: auto;
+        }
+        
+        .share-actions-bottom {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .share-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--footer-bg), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+            padding: 0 1rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .footer-section p {
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: white;
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .theme-toggle {
+                top: 0.5rem;
+                right: 0.5rem;
+                width: 35px;
+                height: 35px;
+            }
+            
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .search-container {
+                margin: 0.5rem 0;
+                width: 100%;
+            }
+            
+            .search-container input {
+                flex: 1;
+            }
+            
+            .hayvanlar-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.7rem;
+            }
+            
+            .share-actions {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-container {
+                justify-content: center;
+            }
+        }
+        
+        #user-info {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+        
+        .profile-icon {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        #logout {
+            color: white;
+            text-decoration: none;
+            margin-left: 0.5rem;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        #logout:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Canlılar Dünyası</h1>
+        <p>Hayvanlar Alemine Hoş Geldiniz</p>
+        <button class="theme-toggle" aria-label="Temayı Değiştir">
+            <i class="fas fa-moon" id="theme-icon"></i>
+        </button>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i>Ana Sayfa</a></li>
+                <li><a href="kesfet.html"><i class="fas fa-compass"></i>Keşfet</a></li>
+                <li><a href="hakkinda.html"><i class="fas fa-info-circle"></i>Hakkında</a></li>
+                <li><a href="oneri.html"><i class="fas fa-lightbulb"></i>Öneriler</a></li>
+                <li><a href="iletisim.html"><i class="fas fa-envelope"></i>İletişim</a></li>
+                <li id="user-info" style="display: none;">
+                    <span class="profile-icon"></span>
+                    <span id="username"></span> | <a href="/logout" id="logout">Çıkış Yap</a>
+                </li>
+                <li id="login-link">
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i>Giriş Yap</a>
+                </li>
+            </ul>
+            
+            <div class="search-container">
+                <input type="text" placeholder="Hayvan ara...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="section-header">
+            <h2>Hayvanlar</h2>
+            <p>Aşağıdaki hayvanlara tıklayarak detaylı bilgiye ulaşabilirsiniz.</p>
+        </div>
+        
+        <div class="filter-container">
+            <button class="filter-btn active">Tümü</button>
+            <button class="filter-btn">Memeliler</button>
+            <button class="filter-btn">Kuşlar</button>
+            <button class="filter-btn">Deniz Canlıları</button>
+            <button class="filter-btn">Sürüngenler</button>
+        </div>
+        
+        <div class="hayvanlar-container">
+            <div class="hayvan-card" onclick="window.location.href='hayvan-detay.html?id=1'">
+                <span class="category">Memeli</span>
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d" alt="Aslan">
+                </div>
+                <div class="content">
+                    <h3>Aslan</h3>
+                    <p>Aslanlar, güçlü ve sosyal canlılardır. Afrika ve Asya'nın belirli bölgelerinde yaşarlar.</p>
+                    <a href="hayvan-detay.html?id=1" class="btn">Detaylar</a>
+                </div>
+            </div>
+            
+            <div class="hayvan-card" onclick="window.location.href='hayvan-detay.html?id=2'">
+                <span class="category">Kuş</span>
+                <div class="img-container">
+                    <img src="https://media.istockphoto.com/id/1438188251/tr/foto%C4%9Fraf/white-tailed-eagle.jpg?s=2048x2048&w=is&k=20&c=9Q_Zwau4ld6rvpvdHiGVKF19gn4XASCpEj2RTfmQXM0=" alt="Kartal">
+                </div>
+                <div class="content">
+                    <h3>Kartal</h3>
+                    <p>Kartallar, keskin görüşleri ve güçlü pençeleriyle bilinen yırtıcı kuşlardır.</p>
+                    <a href="hayvan-detay.html?id=2" class="btn">Detaylar</a>
+                </div>
+            </div>
+            
+            <div class="hayvan-card" onclick="window.location.href='hayvan-detay.html?id=3'">
+                <span class="category">Deniz Canlısı</span>
+                <div class="img-container">
+                    <img src="https://media.istockphoto.com/id/1691211636/tr/foto%C4%9Fraf/close-up-of-humpback-whale-calf-swimming-with-its-mother-in-the-deep-blue-pacific-ocean.jpg?s=2048x2048&w=is&k=20&c=hQlZVyE2VYFRRauSNXTEFyJrNurfi7fMS54j0TLTJJI=" alt="Balina">
+                </div>
+                <div class="content">
+                    <h3>Balina</h3>
+                    <p>Balinalar, dünyanın en büyük deniz memelileridir ve okyanuslarda yaşarlar.</p>
+                    <a href="hayvan-detay.html?id=3" class="btn">Detaylar</a>
+                </div>
+            </div>
+            
+            <div class="hayvan-card" onclick="window.location.href='hayvan-detay.html?id=4'">
+                <span class="category">Memeli</span>
+                <div class="img-container">
+                    <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46" alt="Fil">
+                </div>
+                <div class="content">
+                    <h3>Fil</h3>
+                    <p>Filler, karada yaşayan en büyük memelilerden biridir ve uzun hortumlarıyla bilinirler.</p>
+                    <a href="hayvan-detay.html?id=4" class="btn">Detaylar</a>
+                </div>
+            </div>
+            
+            <div class="hayvan-card" onclick="window.location.href='hayvan-detay.html?id=5'">
+                <span class="category">Kuş</span>
+                <div class="img-container">
+                    <img src="https://media.istockphoto.com/id/518680544/photo/adelie-penguin-jumping-between-two-ice-floes.webp?a=1&b=1&s=612x612&w=0&k=20&c=PIqia_SAWGG3UJu67Caz3JZQkq8V4pDeU4d2u9jj66M=" alt="Penguen">
+                </div>
+                <div class="content">
+                    <h3>Penguen</h3>
+                    <p>Penguenler, yüzmeye uyarlanmış kanatları olan ve genellikle Güney Yarımküre'de yaşayan deniz kuşlarıdır.</p>
+                    <a href="hayvan-detay.html?id=5" class="btn">Detaylar</a>
+                </div>
+            </div>
+            
+            <div class="hayvan-card" onclick="window.location.href='hayvan-detay.html?id=6'">
+                <span class="category">Memeli</span>
+                <div class="img-container">
+                    <img src="https://plus.unsplash.com/premium_photo-1661825862507-345622b5c8d7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YW5pbWFsJTIweiVDMyVCQ3JhZmF8ZW58MHx8MHx8fDA%3D" alt="Zürafa">
+                </div>
+                <div class="content">
+                    <h3>Zürafa</h3>
+                    <p>Zürafalar, uzun boyunları ve desenli derileriyle Afrika'da yaşayan otçul memelilerdir.</p>
+                    <a href="hayvan-detay.html?id=6" class="btn">Detaylar</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="share-section">
+            <div class="section-header">
+                <h2>Canlılar Hakkında Paylaşım Yap</h2>
+                <p>Sevdiğiniz hayvanlar hakkında bilgilerinizi ve gözlemlerinizi paylaşın.</p>
+            </div>
+            
+            <div class="share-container">
+                <textarea placeholder="Bir hayvan hakkında bilgi veya gözlemlerinizi paylaşın..."></textarea>
+                
+                <div class="share-actions">
+                    <button class="upload-btn">
+                        <i class="fas fa-image"></i> Fotoğraf Ekle
+                    </button>
+                    <button class="btn">
+                        <i class="fas fa-paper-plane"></i> Paylaş
+                    </button>
+                </div>
+            </div>
+            
+            <div class="recent-shares">
+                <h3>Son Paylaşımlar</h3>
+                
+                <div class="share-item">
+                    <div class="share-user">
+                        <img src="/api/placeholder/40/40" alt="Kullanıcı">
+                        <div class="user-info">
+                            <div class="user-name">Ahmet Yılmaz</div>
+                            <div class="time">2 saat önce</div>
+                        </div>
+                    </div>
+                    <div class="share-content">
+                        Geçen hafta Milli Park'ta bir kartal gördüm. İnanılmaz bir güzelliği vardı. Kartallar genellikle sarp kayalıklarda yuva yaparlar ve görüş mesafeleri insanlardan 4-5 kat daha iyidir!
+                    </div>
+                    <div class="share-media">
+                        <img src="/api/placeholder/600/400" alt="Kartal">
+                    </div>
+                    <div class="share-actions-bottom">
+                        <div class="share-action">
+                            <i class="fas fa-heart"></i> 24 Beğeni
+                        </div>
+                        <div class="share-action">
+                            <i class="fas fa-comment"></i> 5 Yorum
+                        </div>
+                        <div class="share-action">
+                            <i class="fas fa-share"></i> Paylaş
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="share-item">
+                    <div class="share-user">
+                        <img src="/api/placeholder/40/40" alt="Kullanıcı">
+                        <div class="user-info">
+                            <div class="user-name">Ayşe Demir</div>
+                            <div class="time">1 gün önce</div>
+                        </div>
+                    </div>
+                    <div class="share-content">
+                        Biliyor muydunuz? Balinalar uyurken beyinlerinin sadece yarısını kapatırlar! Diğer yarısı nefes almalarını kontrol eder ve tehlikelere karşı tetikte kalır. Bu yüzden tam olarak asla uyumazlar.
+                    </div>
+                    <div class="share-actions-bottom">
+                        <div class="share-action">
+                            <i class="fas fa-heart"></i> 42 Beğeni
+                        </div>
+                        <div class="share-action">
+                            <i class="fas fa-comment"></i> 12 Yorum
+                        </div>
+                        <div class="share-action">
+                            <i class="fas fa-share"></i> Paylaş
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Hakkımızda</h3>
+                <p>Canlılar Dünyası, dünya üzerindeki çeşitli hayvan türlerini tanıtmak ve hayvan sevgisini artırmak amacıyla kurulmuş bir platformdur.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Hızlı Linkler</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="kesfet.html">Keşfet</a></li>
+                    <li><a href="hakkinda.html">Hakkında</a></li>
+                    <li><a href="oneri.html">Öneriler</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>İletişim</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> İstanbul, Türkiye</li>
+                    <li><i class="fas fa-phone"></i> +90 212 123 45 67</li>
+                    <li><i class="fas fa-envelope"></i> info@canlilardunyasi.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Canlılar Dünyası. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Tema değiştirme işlemleri
+        const themeToggle = document.querySelector('.theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        
+        // Sayfa yüklendiğinde yerel depolamadan tema tercihini al
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            
+            // Tema ikonunu güncelle
+            if (currentTheme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+        
+        // Tema değiştirme butonu
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            let newTheme = '';
+            
+            if (currentTheme === 'dark') {
+                newTheme = 'light';
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                newTheme = 'dark';
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // Filtre butonları
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Aktif sınıfı kaldır
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Tıklanan butona aktif sınıf ekle
+                this.classList.add('active');
+                
+                // Filtre işlemleri burada yapılabilir
+                // Şimdilik sadece UI için
+            });
+        });
+        
+        // Kullanıcı oturum bilgilerini kontrol et
+        document.addEventListener('DOMContentLoaded', function() {
+            const userInfo = document.getElementById('user-info');
+            const loginLink = document.getElementById('login-link');
+            const usernameDisplay = document.getElementById('username');
+
+            // Kullanıcı oturum bilgilerini sunucudan al
+            fetch('/api/user') // Kullanıcı bilgilerini almak için bir API isteği
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        usernameDisplay.textContent = data.username; // Kullanıcı adını göster
+                        userInfo.style.display = 'inline'; // Kullanıcı bilgilerini göster
+                        loginLink.style.display = 'none'; // Giriş yap linkini gizle
+                    } else {
+                        userInfo.style.display = 'none'; // Kullanıcı bilgilerini gizle
+                        loginLink.style.display = 'inline'; // Giriş yap linkini göster
+                    }
+                })
+                .catch(error => console.error('Error fetching user data:', error));
+
+            // Çıkış yapma işlemi
+            document.getElementById('logout')?.addEventListener('click', function(event) {
+                event.preventDefault(); // Varsayılan bağlantı davranışını engelle
+                fetch('/logout') // Çıkış işlemi için sunucuya istek gönder
+                    .then(response => {
+                        if (response.ok) {
+                            // Çıkış işlemi başarılıysa sayfayı yenile
+                            location.reload(); // Sayfayı yenile
+                        }
+                    })
+                    .catch(error => console.error('Error during logout:', error));
+            });
+        });
+    </script>
+</body>
+</html>
