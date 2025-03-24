@@ -5,278 +5,437 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keşfet - Canlılar Dünyası</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #3498db;
-            --primary-dark: #2980b9;
-            --secondary-color: #16a085;
-            --text-color: #333;
-            --text-secondary: #666;
-            --bg-color: #f8f9fa;
+            --primary-color: #05704a; /* Daha koyu yeşil */
+            --primary-dark: #044d31;
+            --secondary-color: #a855f7;  /* Mor */
+            --text-color: #1e293b;  /* Koyu gri */
+            --text-secondary: #4b5563;
+            --bg-color: #f3f4f6;  /* Açık gri */
             --card-bg: #ffffff;
-            --header-bg: #16a085;
-            --nav-bg: #1abc9c;
-            --footer-bg: #16a085;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --header-bg: linear-gradient(to right, #05704a, #a855f7); /* Yeşil-Mor gradient */
+            --nav-bg: #ffffff; /* Beyaz */
+            --footer-bg: #05704a;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --transition: all 0.3s ease;
+            --rounded-md: 0.5rem; /* 8px */
+            --rounded-lg: 0.75rem; /* 12px */
+            --rounded-xl: 1rem;    /* 16px */
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
-        
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
+            line-height: 1.6;
         }
-    
+
         header {
-            background: linear-gradient(135deg, var(--header-bg), var(--secondary-color));
+            background: var(--header-bg);
             color: white;
-            padding: 2.5rem 0;
+            padding: 3rem 0;
             text-align: center;
             position: relative;
             box-shadow: var(--shadow);
+            border-bottom-left-radius: var(--rounded-xl);
+            border-bottom-right-radius: var(--rounded-xl);
         }
-        
+
         header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 1px;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
         }
-        
+
         header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.25rem;
+            opacity: 0.8;
+            max-width: 80%;
+            margin: 0 auto;
         }
-        
+
         nav {
             background-color: var(--nav-bg);
-            padding: 1rem 0;
+            padding: 1.25rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
             box-shadow: var(--shadow);
+            border-bottom: 1px solid #e5e7eb;
         }
-        
+
         nav .container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 1rem;
+            padding: 0 2rem;
         }
-        
+
         nav ul {
             display: flex;
             list-style: none;
             flex-wrap: wrap;
             justify-content: center;
+            margin: 0 -1rem;
         }
-        
+
         nav ul li {
             margin: 0 1rem;
         }
-        
+
         nav ul li a {
-            color: white;
+            color: var(--text-color);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            padding: 0.3rem 0;
+            padding: 0.5rem 0;
+            font-size: 1.1rem;
         }
-        
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav ul li a i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
         main {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: 3rem auto;
+            padding: 0 2rem;
         }
-        
+
         .section-header {
-            margin-bottom: 2rem;
-            position: relative;
-            padding-bottom: 0.5rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
         }
-        
+
         .section-header h2 {
-            font-size: 2rem;
-            color: var(--text-color);
-            margin-bottom: 0.5rem;
+            font-size: 2.25rem;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
         }
-        
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 75%;
+            margin: 0 auto;
+        }
+
         .yorum-container {
             margin-top: 2rem;
         }
-        
+
         .yorum {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: var(--rounded-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            border: 1px solid #e5e7eb;
         }
-        
+
         .yorum:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-0.25rem);
+            box-shadow: 0 6px 10px -2px rgba(0, 0, 0, 0.15);
         }
-        
+
         .yorum p {
             color: var(--text-color);
-            line-height: 1.7;
-            margin: 0.5rem 0;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+            font-size: 1rem;
         }
-        
+
         .yorum .beğeni {
             cursor: pointer;
             color: var(--primary-color);
-            font-weight: 500;
+            font-weight: 600;
             display: inline-flex;
             align-items: center;
-            margin-top: 0.8rem;
+            margin-top: 1.25rem;
             transition: var(--transition);
+            font-size: 1rem;
         }
-        
+
         .yorum .beğeni:hover {
             color: var(--primary-dark);
             transform: scale(1.05);
         }
-        
+
+        .yorum .beğeni i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
         .yanit-form {
-            margin-top: 1.2rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            padding-top: 1.2rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
         }
-        
+
         .yanit-form h4 {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             color: var(--text-color);
+            font-size: 1.2rem;
+            font-weight: 600;
         }
-        
+
         .yanit-form textarea {
             width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 0.8rem;
+            border: 1px solid #d1d5db;
+            border-radius: var(--rounded-md);
+            padding: 1rem;
             resize: none;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            min-height: 4rem;
         }
-        
+
+        .yanit-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(5, 112, 74, 0.15);
+        }
+
         .yanit-form button {
             background-color: var(--primary-color);
             color: white;
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 1.8rem;
             border: none;
-            border-radius: 30px;
+            border-radius: var(--rounded-full);
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
         }
-        
+
         .yanit-form button:hover {
             background-color: var(--primary-dark);
-            transform: translateY(-2px);
+            transform: translateY(-0.125rem);
         }
-        
+
         form {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 2rem;
+            border-radius: var(--rounded-lg);
+            padding: 2.5rem;
+            margin-top: 2.5rem;
             box-shadow: var(--shadow);
+            border: 1px solid #e5e7eb;
         }
-        
+
         form h3 {
-            color: var(--text-color);
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.5rem;
-            position: relative;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.85rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
         }
-        
+
         form textarea {
             width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: var(--rounded-md);
             padding: 1rem;
             resize: none;
             background-color: var(--bg-color);
             color: var(--text-color);
             font-size: 1rem;
-            margin-bottom: 1.5rem;
-            min-height: 120px;
+            margin-bottom: 2rem;
+            min-height: 8rem;
         }
-        
+
+        form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(5, 112, 74, 0.15);
+        }
+
         form button {
             background-color: var(--primary-color);
             color: white;
-            padding: 0.8rem 1.8rem;
+            padding: 0.8rem 2rem;
             border: none;
-            border-radius: 30px;
+            border-radius: var(--rounded-full);
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            font-size: 1.1rem;
         }
-        
+
+        form button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-0.125rem);
+        }
+
+        form button i {
+            font-size: 1.2rem;
+        }
+
         footer {
-            background: linear-gradient(135deg, var(--footer-bg), var(--secondary-color));
+            background: var(--header-bg);
             color: white;
             text-align: center;
             padding: 3rem 0;
-            margin-top: 3rem;
+            margin-top: 4rem;
+            border-top-left-radius: var(--rounded-xl);
+            border-top-right-radius: var(--rounded-xl);
         }
-        
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 0 2rem;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .footer-section p {
+            font-size: 1rem;
+            opacity: 0.8;
+            line-height: 1.75;
+        }
+
+        .social-links {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin-top: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: var(--transition);
+            opacity: 0.8;
+        }
+
+        .footer-links li a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
         .copyright {
             margin-top: 2rem;
             padding-top: 1.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            opacity: 0.7;
         }
-        
+
         #user-info {
             display: flex;
             align-items: center;
-            color: white;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.1rem;
         }
-        
+
         .profile-icon {
             display: inline-block;
-            width: 25px;
-            height: 25px;
-            background-color: white;
+            width: 2.5rem;
+            height: 2.5rem;
+            background-color: #e5e7eb;
             border-radius: 50%;
-            margin-right: 0.5rem;
+            margin-right: 0.75rem;
         }
-        
+
         #logout {
-            color: white;
+            color: var(--primary-color);
             text-decoration: none;
-            margin-left: 0.5rem;
-            opacity: 0.8;
+            margin-left: 0.75rem;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        #logout:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .theme-toggle {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
             transition: var(--transition);
         }
-        
-        #logout:hover {
-            opacity: 1;
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
         }
-        
+
         .yanit {
             background-color: var(--bg-color);
-            border-radius: 8px;
+            border-radius: var(--rounded-md);
             padding: 1rem;
             margin-top: 1rem;
-            border-left: 3px solid var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+            margin-left: 2rem;
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -403,196 +562,215 @@
             const userInfo = document.getElementById('user-info');
             const loginLink = document.getElementById('login-link');
             const usernameDisplay = document.getElementById('username');
-
-            // Kullanıcı oturum bilgilerini sunucudan al
-            fetch('/api/user') // Kullanıcı bilgilerini almak için bir API isteği
-                .then(response => response.json())
-                .then(data => {
-                    if (data.username) {
-                        usernameDisplay.textContent = data.username; // Kullanıcı adını göster
-                        userInfo.style.display = 'inline'; // Kullanıcı bilgilerini göster
-                        loginLink.style.display = 'none'; // Giriş yap linkini gizle
-                    } else {
-                        userInfo.style.display = 'none'; // Kullanıcı bilgilerini gizle
-                        loginLink.style.display = 'inline'; // Giriş yap linkini göster
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Tema değiştirme işlemleri
+            // Sayfa yüklendiğinde yerel depolamadan tema tercihini al
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            
+            // Tema ikonunu güncelle
+            const themeIcon = themeToggle.querySelector('i');
+            if (themeIcon) {
+                if (currentTheme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+            
+            // Tema değiştirme butonu
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                let newTheme = '';
+                const themeIcon = themeToggle.querySelector('i');
+                
+                if (currentTheme === 'dark') {
+                    newTheme = 'light';
+                    if (themeIcon) {
+                        themeIcon.classList.remove('fa-sun');
+                        themeIcon.classList.add('fa-moon');
                     }
-                })
-                .catch(error => console.error('Error fetching user data:', error));
-
-            // Çıkış yapma işlemi
-            document.getElementById('logout')?.addEventListener('click', function(event) {
-                event.preventDefault(); // Varsayılan bağlantı davranışını engelle
-                fetch('/logout') // Çıkış işlemi için sunucuya istek gönder
-                    .then(response => {
-                        if (response.ok) {
-                            // Çıkış işlemi başarılıysa sayfayı yenile
-                            location.reload(); // Sayfayı yenile
-                        }
-                    })
-                    .catch(error => console.error('Error during logout:', error));
+                } else {
+                    newTheme = 'dark';
+                    if (themeIcon) {
+                        themeIcon.classList.remove('fa-moon');
+                        themeIcon.classList.add('fa-sun');
+                    }
+                }
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
             });
 
-            // Yorumları yükleme işlemi
-            function loadComments() {
-                fetch('/api/comments')
-                    .then(response => response.json())
-                    .then(comments => {
-                        const yorumContainer = document.querySelector('.yorum-container');
-                        yorumContainer.innerHTML = ''; // Önceki yorumları temizle
-
-                        comments.forEach(comment => {
-                            const yeniYorum = document.createElement('div');
-                            yeniYorum.classList.add('yorum');
-                            yeniYorum.innerHTML = `
-                                <p><strong>${comment.username}:</strong> ${comment.content}</p>
-                                <span class="beğeni" data-id="${comment.id}">👍 Beğen (${comment.like_count})</span>
-                                <div class="yanit-form">
-                                    <h4>Yanıtla:</h4>
-                                    <textarea rows="2" placeholder="Yanıtınızı buraya yazın..."></textarea>
-                                    <button type="button" data-id="${comment.id}">Yanıtla</button>
-                                </div>`;
-                            yorumContainer.appendChild(yeniYorum);
-                        });
-
-                        // Beğeni butonlarına tıklama olayını ekle
-                        addLikeEventListeners();
-                    })
-                    .catch(error => console.error('Error loading comments:', error));
+            // Kullanıcı giriş kontrolü
+            function checkUserLogin() {
+                // localStorage'dan kullanıcı bilgisini kontrol et
+                const user = JSON.parse(localStorage.getItem('user'));
+                
+                if (user && user.username) {
+                    // Kullanıcı giriş yapmışsa
+                    usernameDisplay.textContent = user.username;
+                    
+                    // Profil resmi varsa göster
+                    const profileIcon = document.querySelector('.profile-icon');
+                    if (profileIcon && user.profileImage) {
+                        // Profil ikonunu kullanıcı adının ilk harfi ile güncelle
+                        profileIcon.textContent = user.profileImage;
+                        profileIcon.style.display = 'flex';
+                        profileIcon.style.justifyContent = 'center';
+                        profileIcon.style.alignItems = 'center';
+                        profileIcon.style.backgroundColor = 'var(--primary-color)';
+                        profileIcon.style.color = 'white';
+                        profileIcon.style.fontWeight = 'bold';
+                    }
+                    
+                    userInfo.style.display = 'flex';
+                    loginLink.style.display = 'none';
+                } else {
+                    // Kullanıcı giriş yapmamışsa
+                    userInfo.style.display = 'none';
+                    loginLink.style.display = 'block';
+                }
             }
+            
+            // Sayfa yüklendiğinde kullanıcı giriş kontrolü yap
+            checkUserLogin();
 
-            // Beğeni ekleme işlemi
-            function addLikeEventListeners() {
-                document.querySelectorAll('.beğeni').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const commentId = this.getAttribute('data-id');
-
-                        fetch('/api/likes', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ commentId })
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                alert('Beğenildi!');
-                                // Beğeni sayısını güncelle
-                                const likeCount = parseInt(this.textContent.match(/\d+/)[0]) + 1;
-                                this.textContent = `👍 Beğen (${likeCount})`;
-                            }
-                        })
-                        .catch(error => console.error('Error liking comment:', error));
-                    });
+            // Çıkış yapma işlevi
+            const logoutButton = document.getElementById('logout');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user');
+                    checkUserLogin();
                 });
             }
+        });
 
-            // Yorum yapma işlemi
-            document.getElementById('yorum-form').addEventListener('submit', function(event) {
-                event.preventDefault(); // Formun varsayılan gönderimini engelle
-                const yorumText = document.getElementById('yorum').value;
-
-                fetch('/api/comments', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ content: yorumText })
-                })
+        function loadComments() {
+            fetch('/api/comments')
                 .then(response => response.json())
-                .then(data => {
-                    // Yorum alanını temizle
-                    document.getElementById('yorum').value = '';
+                .then(comments => {
+                    const yorumContainer = document.querySelector('.yorum-container');
+                    yorumContainer.innerHTML = ''; // Önceki yorumları temizle
 
-                    // Yorumları güncelle
-                    const yeniYorum = document.createElement('div');
-                    yeniYorum.classList.add('yorum');
-                    yeniYorum.innerHTML = `
-                        <p><strong>${usernameDisplay.textContent}:</strong> ${data.content}</p>
-                        <span class="beğeni" data-id="${data.id}">👍 Beğen (0)</span>
-                        <div class="yanit-form">
-                            <h4>Yanıtla:</h4>
-                            <textarea rows="2" placeholder="Yanıtınızı buraya yazın..."></textarea>
-                            <button type="button" data-id="${data.id}">Yanıtla</button>
-                        </div>`;
-                    document.querySelector('.yorum-container').appendChild(yeniYorum);
+                    comments.forEach(comment => {
+                        const yeniYorum = document.createElement('div');
+                        yeniYorum.classList.add('yorum');
+                        yeniYorum.innerHTML = `
+                            <p><strong>${comment.username}:</strong> ${comment.content}</p>
+                            <span class="beğeni" data-id="${comment.id}">👍 Beğen (${comment.like_count})</span>
+                            <div class="yanit-form">
+                                <h4>Yanıtla:</h4>
+                                <textarea rows="2" placeholder="Yanıtınızı buraya yazın..."></textarea>
+                                <button type="button" data-id="${comment.id}"><i class="fas fa-reply"></i> Yanıtla</button>
+                            </div>`;
+                        yorumContainer.appendChild(yeniYorum);
+                    });
+
+                    // Beğeni butonlarına tıklama olayını ekle
+                    addLikeEventListeners();
                 })
-                .catch(error => console.error('Error adding comment:', error));
-            });
+                .catch(error => console.error('Error loading comments:', error));
+        }
 
-            // Yanıt verme işlemi
-            document.addEventListener('click', function(e) {
-                // Yanıt butonları
-                if (e.target.closest('.yanit-form button')) {
-                    const button = e.target.closest('.yanit-form button');
-                    const commentId = button.getAttribute('data-id');
-                    const textarea = button.parentElement.querySelector('textarea');
-                    const yanitText = textarea.value;
+        // Beğeni ekleme işlemi
+        function addLikeEventListeners() {
+            document.querySelectorAll('.beğeni').forEach(button => {
+                button.addEventListener('click', function() {
+                    const commentId = this.getAttribute('data-id');
 
-                    if (!yanitText.trim()) return; // Boş yanıtları engelle
-
-                    fetch('/api/replies', {
+                    fetch('/api/likes', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ commentId, content: yanitText })
+                        body: JSON.stringify({ commentId })
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Yanıt alanını temizle
-                        textarea.value = '';
-
-                        // Yanıtı ekle
-                        const yeniYanit = document.createElement('div');
-                        yeniYanit.classList.add('yanit');
-                        yeniYanit.innerHTML = `<p><strong>${usernameDisplay.textContent}:</strong> ${data.content}</p>`;
-                        button.parentElement.before(yeniYanit);
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Beğenildi!');
+                            // Beğeni sayısını güncelle
+                            const likeCount = parseInt(this.textContent.match(/\d+/)[0]) + 1;
+                            this.textContent = `👍 Beğen (${likeCount})`;
+                        }
                     })
-                    .catch(error => console.error('Error adding reply:', error));
-                }
+                    .catch(error => console.error('Error liking comment:', error));
+                });
             });
+        }
 
-            // Yorumları yükle
-            loadComments();
-        });
+        // Yorum yapma işlemi
+        document.getElementById('yorum-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Formun varsayılan gönderimini engelle
+            const yorumText = document.getElementById('yorum').value;
 
-        function loadComments() {
-    fetch('/api/comments')
-        .then(response => response.json())
-        .then(comments => {
-            const yorumContainer = document.querySelector('.yorum-container');
-            yorumContainer.innerHTML = ''; // Önceki yorumları temizle
+            fetch('/api/comments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content: yorumText })
+            })
+            .then(response => response.json()).then(data => {
+                // Yorum alanını temizle
+                document.getElementById('yorum').value = '';
 
-            comments.forEach(comment => {
+                // Yorumları güncelle
                 const yeniYorum = document.createElement('div');
                 yeniYorum.classList.add('yorum');
                 yeniYorum.innerHTML = `
-                    <p><strong>${comment.username}:</strong> ${comment.content}</p>
-                    <span class="beğeni" data-id="${comment.id}">👍 Beğen (${comment.like_count})</span>
+                    <p><strong>${usernameDisplay.textContent}:</strong> ${data.content}</p>
+                    <span class="beğeni" data-id="${data.id}">👍 Beğen (0)</span>
                     <div class="yanit-form">
                         <h4>Yanıtla:</h4>
                         <textarea rows="2" placeholder="Yanıtınızı buraya yazın..."></textarea>
-                        <button type="button" data-id="${comment.id}">Yanıtla</button>
+                        <button type="button" data-id="${data.id}"><i class="fas fa-reply"></i> Yanıtla</button>
                     </div>`;
+                document.querySelector('.yorum-container').appendChild(yeniYorum);
+            })
+            .catch(error => console.error('Error adding comment:', error));
+        });
 
-                // Yanıtları ekle
-                if (comment.replies && comment.replies.length > 0) {
-                    comment.replies.forEach(reply => {
-                        const yeniYanit = document.createElement('div');
-                        yeniYanit.classList.add('yanit');
-                        yeniYanit.innerHTML = `<p><strong>${reply.username}:</strong> ${reply.content}</p>`;
-                        yeniYorum.appendChild(yeniYanit);
-                    });
-                }
+         // Yanıt verme işlemi
+        document.addEventListener('click', function(e) {
+            // Yanıt butonları
+            if (e.target.closest('.yanit-form button')) {
+                const button = e.target.closest('.yanit-form button');
+                const commentId = button.getAttribute('data-id');
+                const textarea = button.parentElement.querySelector('textarea');
+                const yanitText = textarea.value;
 
-                yorumContainer.appendChild(yeniYorum);
-            });
+                if (!yanitText.trim()) return; // Boş yanıtları engelle
 
-            // Beğeni butonlarına tıklama olayını ekle
-            addLikeEventListeners();
-        })
-        .catch(error => console.error('Error loading comments:', error));
-}
+                fetch('/api/replies', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ commentId, content: yanitText })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Yanıt alanını temizle
+                    textarea.value = '';
+
+                    // Yanıtı ekle
+                    const yeniYanit = document.createElement('div');
+                    yeniYanit.classList.add('yanit');
+                    yeniYanit.innerHTML = `<p><strong>${usernameDisplay.textContent}:</strong> ${data.content}</p>`;
+                    button.parentElement.before(yeniYanit);
+                })
+                .catch(error => console.error('Error adding reply:', error));
+            }
+        });
+
+        // Yorumları yükle
+        loadComments();
     </script>
 </body>
 </html>

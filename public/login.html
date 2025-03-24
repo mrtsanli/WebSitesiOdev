@@ -341,7 +341,7 @@
     
     <div class="container">
         <h1>Giriş Yap</h1>
-        <form action="/login" method="POST">
+        <form id="loginForm">
             <div class="form-group">
                 <label for="username">Kullanıcı Adı:</label>
                 <input type="text" id="username" name="username" required placeholder="Kullanıcı adınızı giriniz">
@@ -354,7 +354,58 @@
             
             <button type="submit">Giriş Yap</button>
         </form>
-        <p class="register-link">Hesabınız yok mu? <a href="/register.html">Kayıt Ol</a></p>
+        <p class="register-link">Hesabınız yok mu? <a href="register.html">Kayıt Ol</a></p>
     </div>
+    
+    <script>
+        // Login form submit olayını dinle
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form verilerini al
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Boş alan kontrolü
+            if (!username || !password) {
+                alert('Lütfen kullanıcı adı ve şifre giriniz!');
+                return;
+            }
+            
+            // Sunucu tarafına gönder
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Başarılı giriş
+                    return response.json();
+                } else {
+                    // Hata durumunda
+                    return response.text().then(text => {
+                        throw new Error(text || 'Giriş başarısız');
+                    });
+                }
+            })
+            .then(data => {
+                // Kullanıcı bilgilerini localStorage'a kaydet
+                const user = {
+                    username: data.username,
+                    profileImage: data.username.charAt(0).toUpperCase() // Kullanıcı adının ilk harfi
+                };
+                localStorage.setItem('user', JSON.stringify(user));
+                
+                // Ana sayfaya yönlendir
+                window.location.href = 'oneri.html';
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+        });
+    </script>
 </body>
 </html>
